@@ -1,5 +1,7 @@
 source ~/.asdf/asdf.fish
 
+set -g EDITOR nvim
+
 abbr -a g git
 abbr -a c config
 
