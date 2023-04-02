@@ -1,4 +1,4 @@
-/home/andy/.local/share/rtx/bin/rtx activate -s fish | source
+/home/$USER/.local/share/rtx/bin/rtx activate -s fish | source
 
 set -g EDITOR nvim
 set -g AWS_REGION us-west-2
