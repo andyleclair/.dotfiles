@@ -12,12 +12,8 @@ return {
     }
   },
   {
-    "coffebar/project.nvim",
-    dependencies = {"Shatur/neovim-session-manager"},
-    config = function ()
-      require('telescope').load_extension('projects')
-    end,
-  }
+    "khaveesh/vim-fish-syntax"
+  },
 }
 
 -- every spec file under config.plugins will be loaded automatically by lazy.nvim
