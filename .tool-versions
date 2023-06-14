@@ -1,3 +1,4 @@
 neovim 0.9.1
 elixir 1.14.1-otp-25
 node   20.3.0
+ruby   2.7.6
