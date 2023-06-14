@@ -13,3 +13,4 @@ src/
 .ssh
 .sudo_as_admin_successful
 .wget-hsts
+.hex

@@ -1,0 +1,4 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+setup: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  saml2aws: true
+feedback: !ruby/hash:ActiveSupport::HashWithIndifferentAccess {}
