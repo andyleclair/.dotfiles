@@ -1,3 +1,15 @@
 .dotfiles
 src/
 .config/fish/fish_variables
+.aws
+.bash_history
+.bundle
+.cache
+.lesshst
+.local
+.motd_shown
+.npm
+.saml2aws
+.ssh
+.sudo_as_admin_successful
+.wget-hsts
