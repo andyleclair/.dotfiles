@@ -15,5 +15,6 @@ if status is-interactive
     abbr -a n nvim
     abbr -a gpu git push origin
     abbr -a gpl git pull origin
+    abbr -a cpu config push origin
     abbr -a fce nvim ~/.config/fish/config.fish
 end
