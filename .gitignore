@@ -14,3 +14,6 @@ src/
 .sudo_as_admin_successful
 .wget-hsts
 .hex
+.docker
+.azure
+.viminfo
