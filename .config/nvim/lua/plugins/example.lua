@@ -14,43 +14,16 @@ return {
   {
     "khaveesh/vim-fish-syntax"
   },
-}
-
--- every spec file under config.plugins will be loaded automatically by lazy.nvim
---
--- In your plugin files, you can:
--- * add extra plugins
--- * disable/enabled LazyVim plugins
--- * override the configuration of LazyVim plugins
--- return {
---   -- add gruvbox
---   { "ellisonleao/gruvbox.nvim" },
---
---   -- Configure LazyVim to load gruvbox
---   {
---     "LazyVim/LazyVim",
---     opts = {
---       colorscheme = "gruvbox",
---     },
---   },
---
---   -- change trouble config
---   {
---     "folke/trouble.nvim",
---     -- opts will be merged with the parent spec
---     opts = { use_diagnostic_signs = true },
---   },
---
---   -- disable trouble
---   { "folke/trouble.nvim", enabled = false },
---
 --   -- add symbols-outline
---   {
---     "simrat39/symbols-outline.nvim",
---     cmd = "SymbolsOutline",
---     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
---     config = true,
---   },
+  {
+    "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
+    keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
+    config = true,
+  },
+  {
+    "tpope/vim-abolish"
+  },
 --
 --   -- override nvim-cmp and add cmp-emoji
 --   {
@@ -87,29 +60,61 @@ return {
 --   },
 --
 --   -- add telescope-fzf-native
---   {
---     "telescope.nvim",
---     dependencies = {
---       "nvim-telescope/telescope-fzf-native.nvim",
---       build = "make",
---       config = function()
---         require("telescope").load_extension("fzf")
---       end,
---     },
---   },
+   {
+     "telescope.nvim",
+     dependencies = {
+       "nvim-telescope/telescope-fzf-native.nvim",
+       build = "make",
+       config = function()
+         require("telescope").load_extension("fzf")
+       end,
+     },
+  },
+  --
+  --   -- add elixir to lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
+    opts = {
+      diagnostics = {
+        virtual_text = {
+          prefix = 'icons'
+        },
+      },
+      ---@type lspconfig.options
+      servers = {
+        elixirls = {
+          mason = true,
+          settings = {
+            mixEnv = "dev"
+          }
+        },
+      },
+    },
+  },
+--  {
+--    "elixir-tools/elixir-tools.nvim",
+--    version = "*",
+--    event = { "BufReadPre", "BufNewFile" },
+--    config = function()
+--      local elixir = require("elixir")
 --
---   -- add pyright to lspconfig
---   {
---     "neovim/nvim-lspconfig",
---     ---@class PluginLspOpts
---     opts = {
---       ---@type lspconfig.options
---       servers = {
---         -- pyright will be automatically installed with mason and loaded with lspconfig
---         pyright = {},
---       },
---     },
---   },
+--      elixir.setup {
+--        nextls = {
+--          enable = true, -- defaults to false
+--        },
+--        credo = {
+--          enable = true, -- defaults to true
+--        },
+--        elixir_ls = {
+--          enable = false
+--        }
+--      }
+--    end,
+--    dependencies = {
+--      "nvim-lua/plenary.nvim",
+--    },
+--  },
 --
 --   -- add tsserver and setup with typescript.nvim instead of lspconfig
 --   {
@@ -151,28 +156,25 @@ return {
 --   { import = "lazyvim.plugins.extras.lang.typescript" },
 --
 --   -- add more treesitter parsers
---   {
---     "nvim-treesitter/nvim-treesitter",
---     opts = {
---       ensure_installed = {
---         "bash",
---         "help",
---         "html",
---         "javascript",
---         "json",
---         "lua",
---         "markdown",
---         "markdown_inline",
---         "python",
---         "query",
---         "regex",
---         "tsx",
---         "typescript",
---         "vim",
---         "yaml",
---       },
---     },
---   },
+   {
+     "nvim-treesitter/nvim-treesitter",
+     opts = {
+       ensure_installed = {
+         "bash",
+         "html",
+         "javascript",
+         "json",
+         "lua",
+         "markdown",
+         "markdown_inline",
+         "elixir",
+         "heex",
+         "regex",
+         "vim",
+         "yaml",
+       },
+     },
+   },
 --
 --   -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
 --   -- would overwrite `ensure_installed` with the new value.
@@ -227,55 +229,61 @@ return {
 --     },
 --   },
 --
---   -- Use <tab> for completion and snippets (supertab)
---   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
---   {
---     "L3MON4D3/LuaSnip",
---     keys = function()
---       return {}
---     end,
---   },
---   -- then: setup supertab in cmp
---   {
---     "hrsh7th/nvim-cmp",
---     dependencies = {
---       "hrsh7th/cmp-emoji",
---     },
---     ---@param opts cmp.ConfigSchema
---     opts = function(_, opts)
---       local has_words_before = function()
---         unpack = unpack or table.unpack
---         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
---       end
---
---       local luasnip = require("luasnip")
---       local cmp = require("cmp")
---
---       opts.mapping = vim.tbl_extend("force", opts.mapping, {
---         ["<Tab>"] = cmp.mapping(function(fallback)
---           if cmp.visible() then
---             cmp.select_next_item()
---             -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
---             -- they way you will only jump inside the snippet region
---           elseif luasnip.expand_or_jumpable() then
---             luasnip.expand_or_jump()
---           elseif has_words_before() then
---             cmp.complete()
---           else
---             fallback()
---           end
---         end, { "i", "s" }),
---         ["<S-Tab>"] = cmp.mapping(function(fallback)
---           if cmp.visible() then
---             cmp.select_prev_item()
---           elseif luasnip.jumpable(-1) then
---             luasnip.jump(-1)
---           else
---             fallback()
---           end
---         end, { "i", "s" }),
---       })
---     end,
---   },
--- }
+  -- Use <tab> for completion and snippets (supertab)
+  -- first: disable default <tab> and <s-tab> behavior in LuaSnip
+  {
+    "L3MON4D3/LuaSnip",
+    keys = function()
+      return {}
+    end,
+  },
+  -- then: setup supertab in cmp
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-emoji",
+    },
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
+      local luasnip = require("luasnip")
+      local cmp = require("cmp")
+
+      opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+            -- they way you will only jump inside the snippet region
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+      })
+    end,
+  },
+  {
+    "smjonas/inc-rename.nvim",
+    keys = {
+      {"<leader>rn", "<cmd>IncRename<cr>"}
+    },
+  }
+}
