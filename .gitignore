@@ -24,3 +24,10 @@ snap
 .password-store
 .config/configstore
 lexical
+.fly
+data/
+metadata/
+personal/
+status
+store/
+uuid
