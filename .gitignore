@@ -1,3 +1,17 @@
+.config/.bzero.lock
+.config/bastionzero-logger-nodejs/
+.config/bastionzero-zli-nodejs/
+.config/daemon-6.36.16
+.config/dconf/
+.config/github-copilot/
+.config/htop/
+.config/llvmenv/
+.config/mise/
+.config/nushell/
+.config/pulse/
+.config/warp-terminal/
+*.bak
+*.bak.*
 .aws
 .azure
 .bash_history
@@ -9,6 +23,7 @@
 .codeium
 .config/configstore
 .config/fish/fish_variables
+.config/fish/fishd.*
 .docker
 .dotfiles
 .erlang.cookie
@@ -52,5 +67,3 @@ test
 uuid
 zed
 zls
-*.bak.*
-*.bak
