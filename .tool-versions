@@ -1,7 +1,6 @@
 neovim stable
 elixir 1.15.7-otp-26
 nodejs 20.3.0
-ruby   2.7.6
 erlang 26.1.2
 rebar  3.22.0
 lua    5.4.6
